@@ -34,26 +34,36 @@ class TODO {
   async messagePrompt(
     message: string,
     isTask?: boolean | undefined
-  ): Promise<IMenu> {
-    if (isTask) {
+  ): Promise<IMenu | null> {
+    try {
+      if (isTask) {
+        return await prompt({
+          name: "options",
+          type: "list",
+          message,
+          choices: ["Get-Todos", "Add-Todo", "Delete-Todo", "Update-Todos"],
+        });
+      }
       return await prompt({
-        name: "options",
-        type: "list",
-        message,
-        choices: ["Get-Todos", "Add-Todo", "Delete-Todo", "Update-Todos"],
+        name: "task",
+        type: "confirm",
+        message: message,
       });
+    } catch (error: any) {
+      if (error.isTtyError) {
+        console.log("Your console environment is not supported!");
+        return null;
+      } else {
+        console.log(error);
+        return null;
+      }
     }
-    return await prompt({
-      name: "task",
-      type: "confirm",
-      message: message,
-    });
   }
   async Main() {
-    const options: IMenu = await this.messagePrompt(
+    const options = (await this.messagePrompt(
       "Welcome to the Todo App, Press enter to continue?",
       true
-    );
+    )) as IMenu;
     if ("options" in options)
       switch (options.options) {
         case "Get-Todos":
