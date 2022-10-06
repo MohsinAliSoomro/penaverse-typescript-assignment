@@ -39,33 +39,34 @@ class Game {
       message:
         "Welcome to the number guessing game,This round will ask you 5 number and then we will show you a result, do you want to continue?",
     });
+    let i = 0;
     if (response) {
-      for (let i = 0; i < 5; i++) {
+      do {
         this.number = this.getRondomNumber();
-        let input;
-        input = await this.input(
+        let input = await this.input(
           `Guess the number between 1 and 10, Number: ${i + 1}`
         );
-        if (isNaN(input)) {
-          input = await this.input(
-            `Guess the number between 1 and 10, Number: ${i + 1}`
-          );
-
-          return;
+        if (!isNaN(input) && input >= 1 && input <= 10) {
+          answers.push({ id: i + 1, input, answer: this.number });
+          i++;
+        } else {
+          i = i;
         }
-        answers.push({ id: i + 1, input, answer: this.number });
-      }
+      } while (i < 5);
       const correct = answers.filter(
         (answer) => answer.input === answer.answer
       );
       const incorrect = answers.filter(
         (answer) => answer.input !== answer.answer
       );
-      console.log({
-        answers,
-        correct,
-        incorrect,
+      const response = await prompt({
+        type: "confirm",
+        name: "response",
+        message: `You got ${correct.length} correct and ${incorrect.length} incorrect, do you want to see the result?`,
       });
+      if (response.response) {
+        this.start();
+      }
     }
   }
 }
