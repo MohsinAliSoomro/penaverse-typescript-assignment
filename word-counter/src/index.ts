@@ -5,9 +5,6 @@ class worldCounter {
   constructor() {
     this.start();
   }
-  async validate(input: string) {
-    console.log(input);
-  }
   async start() {
     const { response } = await prompt({
       type: "confirm",
