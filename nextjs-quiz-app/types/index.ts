@@ -9,3 +9,8 @@ export interface IQuestion {
   difficulty: string;
   regions: [];
 }
+
+export interface IAnswer {
+  questionId: string;
+  answer: string;
+}

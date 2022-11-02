@@ -4,6 +4,8 @@ import { useState } from "react";
 import { IQuestion } from "../types";
 import { getQuestions } from "../services/axios";
 import { shuffle } from "../utils/shaffle";
+import Answers from "../components/answers";
+import Questions from "../components/questions";
 interface IAnswer {
   questionId: string;
   answer: string;
@@ -65,64 +67,19 @@ const Home: NextPage = () => {
           </div>
         )}
         {questionNumber === 5 ? (
-          <div>
-            {answers.map((answer) => {
-              const correctAnswer = questions.find(
-                (item) => item.id === answer.questionId
-              )?.correctAnswer;
-              return (
-                <div
-                  key={answer.questionId}
-                  className={`${
-                    answer.answer === correctAnswer
-                      ? "bg-green-500"
-                      : "bg-red-500"
-                  }  border rounded-lg p-4`}
-                >
-                  <p>Your Answer : {answer.answer}</p>
-                  <p>Correct Answer : {correctAnswer}</p>
-                </div>
-              );
-            })}
-            <button
-              className="w-full p-3 border my-3 rounded-lg"
-              onClick={fetchQuestion}
-            >
-              Again
-            </button>
-          </div>
+          <Answers
+            answers={answers}
+            questions={questions}
+            fetchQuestion={fetchQuestion}
+          />
         ) : (
-          <>
-            {state.isLoading ? (
-              <div className="font-bold text-center">Loading...</div>
-            ) : (
-              questions.length > 0 && (
-                <div className="p-4">
-                  <h1 className="font-bold">Question {questionNumber + 1}</h1>
-                  <p className="text-2xl font-bold">
-                    {questions[questionNumber].question}
-                  </p>
-                  <p>Category : {questions[questionNumber].tags[0]}</p>
-                  <ul>
-                    {questionAnswer[questionNumber].map((item, index) => (
-                      <li
-                        onClick={() =>
-                          handleAnswer({
-                            questionId: questions[questionNumber].id,
-                            answer: item,
-                          })
-                        }
-                        className="border p-3 my-2 rounded-lg font-bold cursor-pointer hover:bg-sky-400"
-                        key={index}
-                      >
-                        <span>{index + 1}</span> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            )}
-          </>
+          <Questions
+            handleAnswer={handleAnswer}
+            loading={state.isLoading}
+            questionAnswer={questionAnswer}
+            questionNumber={questionNumber}
+            questions={questions}
+          />
         )}
       </div>
     </div>
