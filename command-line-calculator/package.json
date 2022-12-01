@@ -1,11 +1,25 @@
 {
-  "name": "clc",
+  "name": "cammand-line-calculator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm run lint",
+    "preversion" : "npm run lint",
+    "version" : "npm run format && git add -A src",
+    "postversion" : "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MohsinAliSoomro/penaverse-typescript-assignment/tree/main/command-line-calculator"
+  },
+  "bugs": {
+    "url": "https://github.com/MohsinAliSoomro/penaverse-typescript-assignment/issues"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +29,9 @@
   },
   "devDependencies": {
     "@types/inquirer": "^8.1.0",
+    "prettier": "^2.8.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.8.4"
   }
 }

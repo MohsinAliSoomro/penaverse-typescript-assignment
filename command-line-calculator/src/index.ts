@@ -1,9 +1,9 @@
-import { prompt } from "inquirer";
+import { prompt } from 'inquirer';
 
 interface IAnswers {
   name: boolean;
 }
-type IOperator = "add" | "sub" | "mul" | "div";
+type IOperator = 'add' | 'sub' | 'mul' | 'div';
 class Main {
   firstNumber: number = 0;
   lastNamber: number = 0;
@@ -18,41 +18,41 @@ class Main {
    */
   async welcome(
     isAgain: boolean = false,
-    message: string = "Welcome to the calculator, Press enter to continue"
+    message: string = 'Welcome to the calculator, Press enter to continue',
   ): Promise<void> {
     let response: IAnswers = { name: false };
     if (isAgain) {
       response = await prompt({
-        name: "name",
+        name: 'name',
         message,
-        type: "confirm",
+        type: 'confirm',
       });
     } else {
       response = await prompt({
-        name: "name",
+        name: 'name',
         message,
-        type: "confirm",
+        type: 'confirm',
       });
     }
     if (response.name) {
-      const response = await prompt({
-        name: "operator",
-        message: "What operation do you want to perform?",
-        type: "list",
-        choices: ["Addition", "Subtraction", "Multiplication", "Division"],
+      const response1 = await prompt({
+        name: 'operator',
+        message: 'What operation do you want to perform?',
+        type: 'list',
+        choices: ['Addition', 'Subtraction', 'Multiplication', 'Division'],
       });
-      switch (response.operator) {
-        case "Addition":
-          this.operate("add");
+      switch (response1.operator) {
+        case 'Addition':
+          this.operate('add');
           break;
-        case "Division":
-          this.operate("div");
+        case 'Division':
+          this.operate('div');
           break;
-        case "Multiplication":
-          this.operate("mul");
+        case 'Multiplication':
+          this.operate('mul');
           break;
-        case "Subtraction":
-          this.operate("sub");
+        case 'Subtraction':
+          this.operate('sub');
           break;
         default:
           this.welcome(true);
@@ -67,9 +67,9 @@ class Main {
   async firstDigit(): Promise<{ firstNumber: number }> {
     let first: { firstNumber: number } = { firstNumber: 0 };
     return (first = await prompt({
-      name: "firstNumber",
-      message: "Enter the first number",
-      type: "number",
+      name: 'firstNumber',
+      message: 'Enter the first number',
+      type: 'number',
     }));
   }
   /**
@@ -79,9 +79,9 @@ class Main {
   async secondDigit(): Promise<{ secondNumber: number }> {
     let second: { secondNumber: number } = { secondNumber: 0 };
     return (second = await prompt({
-      name: "secondNumber",
-      message: "Enter the second number",
-      type: "number",
+      name: 'secondNumber',
+      message: 'Enter the second number',
+      type: 'number',
     }));
   }
   /**
@@ -93,26 +93,26 @@ class Main {
     let first: { firstNumber: number } = { firstNumber: 0 };
     first = await this.firstDigit();
     if (isNaN(first.firstNumber)) {
-      this.welcome(true, "Please enter valid number");
+      this.welcome(true, 'Please enter valid number');
       first = await this.firstDigit();
     }
     let second: { secondNumber: number } = { secondNumber: 0 };
     second = await this.secondDigit();
     if (isNaN(second.secondNumber)) {
-      this.welcome(true, "Please enter valid number");
+      this.welcome(true, 'Please enter valid number');
       second = await this.secondDigit();
     }
     switch (operator) {
-      case "sub":
+      case 'sub':
         this.sum = first.firstNumber - second.secondNumber;
         break;
-      case "div":
+      case 'div':
         if (second.secondNumber === 0) {
           return this.welcome(true, "You can't divide by zero");
         }
         this.sum = first.firstNumber / second.secondNumber;
         break;
-      case "mul":
+      case 'mul':
         this.sum = first.firstNumber * second.secondNumber;
         break;
       default:
