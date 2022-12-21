@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class University {
+export default class University {
+    name = "";
     constructor(name) {
-        this.name = "";
         this.name = name;
     }
     getUniveristyName() {
@@ -12,4 +10,3 @@ class University {
         this.name = name;
     }
 }
-exports.default = University;

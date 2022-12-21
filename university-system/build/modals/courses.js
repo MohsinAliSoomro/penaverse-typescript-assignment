@@ -1,23 +1,41 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Courses {
+import { v4 } from "uuid";
+export default class Courses {
+    courses = [];
     addCourse(name, progId) {
-        //code here
+        const id = v4();
+        this.courses.push({
+            id,
+            courseName: name,
+            progId,
+        });
     }
     deleteCourse(id) {
-        //code here
+        this.courses.filter((i) => i.id !== id);
     }
     updateCourse(id, name) {
-        //code here
+        const index = this.courses.findIndex((i) => i.id === id);
+        this.courses[index].courseName = name;
     }
     getCourseById(id) {
-        return { courseName: "string", id: "string" };
+        const result = this.courses.find((i) => i.id === id);
+        if (result) {
+            return result;
+        }
+        else {
+            return {
+                courseName: "",
+                id: "",
+                progId: "",
+            };
+        }
     }
     getCourses() {
-        return [{ courseName: "string", id: "string" }];
+        return this.courses;
     }
     getCoursesByProgId(id) {
-        return [{ courseName: "", id: "" }];
+        const result = this.courses.filter((i) => i.progId === id);
+        if (result)
+            return result;
+        return [{ courseName: "", id: "", progId: "" }];
     }
 }
-exports.default = Courses;

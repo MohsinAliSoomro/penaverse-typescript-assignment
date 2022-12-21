@@ -1,27 +1,29 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Departments {
-    constructor() {
-        this.depName = "";
-        this.id = 0;
-        this.programs = [];
-    }
+import { v4 } from "uuid";
+export default class Departments {
+    departments = [];
+    programs = [];
     addDepartment(name) {
-        // add dep
-        const id = (this.id = +1);
+        const id = v4();
+        this.departments.push({
+            id,
+            depName: name,
+        });
     }
     deleteDepartment(id) {
-        //remove dep
+        this.departments.filter((i) => i.id !== id);
     }
     updateDepartment(id, name) {
-        //update deptarmnt
+        const index = this.departments.findIndex((i) => i.id === id);
+        this.departments[index].depName = name;
     }
     getDepartmentById(id) {
+        const result = this.departments.find((i) => i.id === id);
+        if (result) {
+            return result;
+        }
         return { depName: "", id: "" };
     }
     getDepartments() {
-        //get department
-        return [{ depName: "", id: "" }];
+        return this.departments;
     }
 }
-exports.default = Departments;

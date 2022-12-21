@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "tsc && build/main.js"
+    "dev": "tsc"
   },
   "keywords": [],
   "author": "",

@@ -5,7 +5,7 @@ class Main {
     this.run();
   }
   async run() {
-    const response = await inquirer.prompt({
+     await inquirer.prompt({
       name: "uni",
       type: "confirm",
       message: "Welcome to the University System",

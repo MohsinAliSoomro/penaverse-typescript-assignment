@@ -6,7 +6,6 @@ interface IDepartment {
 }
 export default class Departments implements IDepartments {
   private departments: IDepartment[] = [];
-  programs: string[] = [];
   addDepartment(name: string) {
     const id = v4();
     this.departments.push({

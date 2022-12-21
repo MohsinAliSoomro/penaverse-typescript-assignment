@@ -1,23 +1,36 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Students {
-    addStudent(name) {
-        //code here
+import { v4 } from "uuid";
+export default class Students {
+    students = [];
+    addStudent(name, progId) {
+        const id = v4();
+        this.students.push({
+            id,
+            stdName: name,
+            progId,
+        });
     }
     deleteStudent(id) {
-        //code here
+        this.students.filter((i) => i.id !== id);
     }
     updateStudent(id, name) {
-        //code here
+        const index = this.students.findIndex((i) => i.id === id);
+        this.students[index].stdName = name;
     }
     getStudentById(id) {
-        return { stdName: "string", id: "string" };
+        const result = this.students.find((i) => i.id === id);
+        if (result) {
+            return result;
+        }
+        return { stdName: "", id: "", progId: "" };
     }
     getStudents() {
-        return [{ stdName: "string", id: "string" }];
+        return this.students;
     }
     getStudentsByProgId(id) {
-        return [{ stdName: "", id: "" }];
+        const result = this.students.filter((i) => i.progId === id);
+        if (result) {
+            return result;
+        }
+        return [{ stdName: "", id: "", progId: "" }];
     }
 }
-exports.default = Students;
