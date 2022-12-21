@@ -1,0 +1,21 @@
+{
+  "name": "university-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc && build/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/uuid": "^9.0.0",
+    "inquirer": "^9.1.4",
+    "typescript": "^4.9.4",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3"
+  }
+}
