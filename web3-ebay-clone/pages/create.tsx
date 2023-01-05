@@ -171,7 +171,7 @@ export default function Create() {
               <div className="flex justify-between">
                 <p>Price (GOR)</p>
                 <input
-                  className="bg-gray-200 p-2 outline-none "
+                  className="bg-gray-200 p-2 outline-none"
                   type="text"
                   placeholder="0.00"
                   id="price"

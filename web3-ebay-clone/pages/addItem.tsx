@@ -1,12 +1,10 @@
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useAddress, useContract } from "@thirdweb-dev/react";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Header from "../components/Headers";
-
+import { toastMessage } from "../utils/toast";
 export default function AddItem() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [image, setImage] = useState<any>();
   const [preview, setPreview] = useState("");
   const address = useAddress();
@@ -14,7 +12,7 @@ export default function AddItem() {
     process.env.NEXT_PUBLIC_NFT_COLLECTIONS,
     "nft-collection"
   );
-  console.log({ contract });
+
   const mintNFT = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!contract && !address) return;
@@ -33,21 +31,17 @@ export default function AddItem() {
       image: image,
     };
     setLoading(true);
-
     try {
       if (typeof address === "string") {
-        const tx = await contract?.mintTo(address, metadata);
-        const recipient = tx?.receipt;
-        const id = tx?.id;
-        const nft = await tx?.data();
+        const tx = contract?.mintTo(address, metadata);
+        if (tx) toastMessage(tx, "NFT created Successfull...!");
         setLoading(false);
-        console.log({ tx, id, recipient, nft });
       }
     } catch (error) {
-      console.error(error);
       setLoading(false);
     }
   };
+  
   return (
     <div>
       <Header />
