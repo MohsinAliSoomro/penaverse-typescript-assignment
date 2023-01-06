@@ -16,8 +16,10 @@ import { ListingType, NATIVE_TOKENS } from "@thirdweb-dev/sdk";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Footer from "../../components/Footer";
 import Header from "../../components/Headers";
 import { network } from "../../utils/network";
+import { toastError, toastLoading, toastSuccess } from "../../utils/toast";
 
 export default function Nft() {
   const router = useRouter();
@@ -87,7 +89,7 @@ export default function Nft() {
         return;
       }
       if (!slug || !contract || !data) return;
-
+      toastLoading();
       await buyNowNFT(
         {
           id: slug,
@@ -97,16 +99,17 @@ export default function Nft() {
         {
           onSuccess(data, variable, context) {
             console.log({ data, variable, context });
-            alert("NFT Buy Successfull...!");
+            toastSuccess("Buy Successfull...!");
+            router.push("/");
           },
           onError(data, variable, context) {
             console.log({ data, variable, context });
-            alert("NFT Buy Failed...!");
+            toastError();
           },
         }
       );
     } catch (error) {
-      console.error(error);
+      toastError();
     }
   };
 
@@ -116,7 +119,7 @@ export default function Nft() {
         switchNetwork && switchNetwork(network);
         return;
       }
-
+      toastLoading();
       //Direct Listing
       if (data?.type === ListingType.Direct) {
         //todo
@@ -128,7 +131,7 @@ export default function Nft() {
           buyNFT();
           return;
         }
-        console.log("price wont not meet make offer");
+
         await makeOffer(
           {
             quantity: 1,
@@ -138,11 +141,11 @@ export default function Nft() {
           {
             onSuccess(data, variable, context) {
               console.log({ data, variable, context });
-              alert("Offer make Successfull...!");
+              toastSuccess("Offer place successfull...!");
             },
             onError(data, variable, context) {
               console.log({ data, variable, context });
-              alert("Offer Failed...!");
+              toastError();
             },
           }
         );
@@ -159,17 +162,18 @@ export default function Nft() {
           {
             onSuccess(data, variable, context) {
               console.log({ data, variable, context });
-              alert("Bid make Successfull...!");
+              toastSuccess("Place bid successfull...!");
             },
             onError(data, variable, context) {
               console.log({ data, variable, context });
-              alert("Bid Failed...!");
+              toastError();
             },
           }
         );
       }
     } catch (error) {
       console.error(error);
+      toastError();
     }
   };
 
@@ -324,6 +328,7 @@ export default function Nft() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useAddress, useContract } from "@thirdweb-dev/react";
 import React, { useState } from "react";
+import Footer from "../components/Footer";
 import Header from "../components/Headers";
-import { toastMessage } from "../utils/toast";
+import { toastLoading, toastMessage } from "../utils/toast";
 export default function AddItem() {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<any>();
@@ -21,6 +22,7 @@ export default function AddItem() {
       alert("Please select image");
       return;
     }
+    toastLoading();
     const target = e.target as typeof e.target & {
       name: { value: string };
       description: { value: string };
@@ -41,11 +43,11 @@ export default function AddItem() {
       setLoading(false);
     }
   };
-  
+
   return (
     <div>
       <Header />
-      <main className="max-w-6xl mx-auto mt-2 border p-5">
+      <main className="max-w-6xl mx-auto mt-2 shadow-lg p-5">
         <h1 className="text-xl font-bold">Add Items to the Marketplace</h1>
         <p className="text-lg">Item Details</p>
         <p>
@@ -53,19 +55,19 @@ export default function AddItem() {
           of the item into your wallet which we can then list for sale!
         </p>
         <div className="flex flex-col md:flex-row md:space-x-4 mt-4">
-          <div className="w-full sm:w-96 border">
+          <div className="w-full sm:w-96 rounded-2xl shadow-xl">
             {preview ? (
               <img src={preview} alt={preview} />
             ) : (
-              <PhotoIcon className="text-blue-500" />
+              <PhotoIcon className="text-orange-500" />
             )}
           </div>
           <div className="w-full p-4">
-            <form onSubmit={mintNFT}>
+            <form onSubmit={mintNFT} className="space-y-2">
               <div>
                 <label>Name</label>
                 <input
-                  className="flex w-full border p-2"
+                  className="flex w-full border p-2 text-black outline-none"
                   type="text"
                   placeholder="Name"
                   id="name"
@@ -75,7 +77,7 @@ export default function AddItem() {
               <div>
                 <label>Description</label>
                 <input
-                  className="flex w-full border p-2"
+                  className="flex w-full border p-2 text-black outline-none"
                   type="text"
                   placeholder="Description"
                   id="description"
@@ -97,7 +99,7 @@ export default function AddItem() {
               </div>
               <button
                 type="submit"
-                className="flex flex-end ml-auto bg-gradient-to-r from-blue-500 to-rose-500 p-4 rounded-full mt-2 text-white"
+                className="flex flex-end ml-auto connectWalletBtn p-4 rounded-full mt-2 text-white"
               >
                 {loading ? "Loading...!" : "  Add Item / Mint Item"}
               </button>
@@ -105,6 +107,7 @@ export default function AddItem() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

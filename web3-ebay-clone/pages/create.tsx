@@ -12,6 +12,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { network } from "../utils/network";
 import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
+import { toastError, toastLoading, toastSuccess } from "../utils/toast";
+import Footer from "../components/Footer";
 export default function Create() {
   const address = useAddress();
   const [selectNft, setSelectedNft] = useState<{
@@ -51,13 +53,17 @@ export default function Create() {
       switchNetwork && switchNetwork(network);
       return;
     }
-    if (!selectNft) return;
+
     //create type
     const target = e.target as typeof e.target & {
       elements: { listing: { value: string }; price: { value: string } };
     };
     const { listing, price } = target.elements;
-
+    if (!selectNft.metadata.id && !listing.value && !price.value) {
+      toastError("Please fill listing type and price");
+      return;
+    }
+    toastLoading();
     if (listing.value === "directListing") {
       if (process.env.NEXT_PUBLIC_NFT_COLLECTIONS) {
         createDirectListing(
@@ -67,15 +73,17 @@ export default function Create() {
             currencyContractAddress: NATIVE_TOKEN_ADDRESS,
             listingDurationInSeconds: 60 * 60 * 27 * 7,
             quantity: 1,
-            buyoutPricePerToken: parseInt(price.value),
+            buyoutPricePerToken: price.value,
             startTimestamp: new Date(),
           },
           {
             onSuccess(error, variables, context) {
               console.log("ONSUCCESS", { error, variables, context });
+              toastSuccess("Listing Successfull...!");
             },
             onError(error, variables, context) {
               console.log("ONERROR", { error, variables, context });
+              toastError();
             },
           }
         );
@@ -89,7 +97,7 @@ export default function Create() {
             tokenId: selectNft.metadata.id,
             currencyContractAddress: NATIVE_TOKEN_ADDRESS,
             listingDurationInSeconds: 60 * 60 * 27 * 7,
-            buyoutPricePerToken: parseInt(price.value),
+            buyoutPricePerToken: price.value,
             startTimestamp: new Date(),
             quantity: 1,
             reservePricePerToken: 0,
@@ -97,9 +105,11 @@ export default function Create() {
           {
             onSuccess(error, variables, context) {
               console.log("ONSUCCESS", { error, variables, context });
+              toastSuccess("Listing Successfull...!");
             },
             onError(error, variables, context) {
               console.log("ONERROR", { error, variables, context });
+              toastError();
             },
           }
         );
@@ -108,7 +118,7 @@ export default function Create() {
   return (
     <div>
       <Header />
-      <main className="max-w-6xl mx-auto mt-2 border p-5">
+      <main className="max-w-6xl mx-auto mt-2 p-5">
         <h1 className="text-xl font-bold">List an Items</h1>
         <p className="text-lg">Select an items you would like to sell</p>
         <hr />
@@ -123,7 +133,7 @@ export default function Create() {
               <div
                 key={item.metadata.id}
                 onClick={() => setSelectedNft(item)}
-                className={`border p-2 shadow rounded-2xl w-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white hover:scale-105 transition-all duration-150 ease-out ${
+                className={`rounded-lg shadow-orange-400/50 space-y-2 p-2 shadow-lg w-full bg-gradient-to-r from-[#F7CE68] to-[#FBAB7E] text-white hover:scale-105 transition-all duration-150 ease-out ${
                   item.metadata.id === selectNft?.metadata?.id
                     ? "border-2 border-black"
                     : ""
@@ -138,9 +148,9 @@ export default function Create() {
                     height={500}
                   />
                 )}
-                <p className="my-2">{item.metadata.name}</p>
+                <p>{item.metadata.name}</p>
                 <hr />
-                <p className="text-xs">{item.metadata.description}</p>
+                <p className="text-xs ">{item.metadata.description}</p>
               </div>
             ))}
           </div>
@@ -186,6 +196,7 @@ export default function Create() {
           </form>
         )}
       </main>
+      <Footer />
     </div>
   );
 }

@@ -5,14 +5,14 @@ import Image from "next/image";
 import { ListingType } from "@thirdweb-dev/sdk";
 import { BanknotesIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import Footer from '../components/Footer'
+import Footer from "../components/Footer";
 const Home: NextPage = () => {
   const { contract } = useContract(
     process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT,
     "marketplace"
   );
   const { data, isLoading, isError } = useActiveListings(contract);
-  console.log({ data, isLoading, isError });
+
   return (
     <div>
       <Header />
