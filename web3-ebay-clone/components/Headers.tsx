@@ -25,9 +25,9 @@ export default function Header() {
   const disconnect = useDisconnect();
   const connect = useMetamask();
   return (
-    <div className="max-w-6xl mx-auto p-2 border-b-2 shadow w-full">
+    <div className="max-w-6xl mx-auto p-2 shadow-lg w-full">
       <nav className="flex items-center justify-between">
-        <div className="flex  items-center space-x-2">
+        <div className="flex items-center space-x-2">
           {address ? (
             <button className="connectWalletBtn" onClick={disconnect}>
               Hi, {address.slice(0, 5)}...{address.slice(-4)}
@@ -44,7 +44,7 @@ export default function Header() {
           <p className="hidden md:block">Ship to</p>
           <p className="hidden md:block">Sell</p>
           <p className="hidden md:block">Wishlist</p>
-          <Link href="/addItem" className="flex items-center hover:link">
+          <Link href="/addItem" className="flex items-center hover:text-orange-800/50">
             Add to Inventory
             <ChevronDownIcon className="w-4 h-4 mr-2" />
           </Link>
@@ -68,16 +68,16 @@ export default function Header() {
         <button className="hidden md:flex items-center w-20 space-x-2 text-xs sm:text-base">
           Shop By Category <ChevronDownIcon className="h-4" />
         </button>
-        <div className="flex flex-1 space-x-2 items-center border px-2 md:px-5 py-2">
-          <MagnifyingGlassIcon className="h-6" />
+        <div className="flex flex-1 rounded space-x-2 items-center px-2 md:px-4 py-2 bg-white text-black">
+          <MagnifyingGlassIcon className="h-6 text-orange-500" />
           <input
             type={"text"}
             className="flex-1 outline-none"
             placeholder="Search anything"
           />
         </div>
-        <button className="hidden md:flex bg-blue-500 p-2 text-white">Search</button>
-        <Link href="/create" className="border p-2 hover:bg-blue-500/50 text-blue-500">
+        <button className="hidden md:flex bg-blue-500 p-2 connectWalletBtn">Search</button>
+        <Link href="/create" className="shadow-lg p-2 bg-gradient-to-r from-orange-500/50 to-rose-600/50 rounded hover:bg-blue-500/50">
           List Item
         </Link>
       </section>

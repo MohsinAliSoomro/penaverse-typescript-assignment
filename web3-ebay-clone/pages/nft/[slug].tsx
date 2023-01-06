@@ -175,7 +175,7 @@ export default function Nft() {
 
   if (isLoading) {
     return (
-      <div className="animate-pulse w-screen h-screen flex justify-center items-center font-bold text-blue-500">
+      <div className="animate-pulse w-screen h-screen flex justify-center items-center font-bold text-orange-800">
         Loading...!
       </div>
     );
@@ -187,15 +187,15 @@ export default function Nft() {
     <div>
       <Header />
       <main className="max-w-6xl mx-auto mt-2">
-        <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-5 border rounded-lg">
+        <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 gap-4 my-8">
+          <div className="p-5 rounded-lg shadow-orange-400/50 shadow-lg">
             <MediaRenderer
               src={data?.asset.image}
               alt={"NFT"}
               className="rounded-lg"
             />
           </div>
-          <div className="p-5 border rounded-lg">
+          <div className="p-5 rounded-lg shadow-orange-400/50 shadow-lg">
             <h1 className="font-bold text-xl">{data?.asset.name}</h1>
             <hr />
             <p>{data.asset.description}</p>
@@ -221,7 +221,7 @@ export default function Nft() {
                 </p>
                 <button
                   onClick={buyNFT}
-                  className="bg-blue-500 rounded-full w-32 flex items-center justify-center mx-auto p-2 px-8 text-white"
+                  className="connectWalletBtn rounded-full w-32 flex items-center justify-center mx-auto p-2 px-8 text-white"
                 >
                   Buy Now
                 </button>
@@ -298,7 +298,7 @@ export default function Nft() {
                   placeholder={placeholderFormat()}
                   value={bidAmount}
                   onChange={(e) => setBidAmount(e.target.value)}
-                  className="w-full p-2 rounded bg-gray-100 outline-none"
+                  className="w-full p-2 rounded bg-gray-100 text-black outline-none"
                 />
               </div>
               <div className="space-y-3">
@@ -315,7 +315,7 @@ export default function Nft() {
                 )}
                 <button
                   onClick={handleBidOrOffer}
-                  className="bg-rose-600 w-32  flex items-center justify-center mx-auto rounded-full p-2 px-8 text-white"
+                  className="bg-gradient-to-r from-orange-500/50 to-rose-600/50 shadow-xl w-32  flex items-center justify-center mx-auto rounded-full p-2 px-8 text-white"
                 >
                   {data.type === ListingType.Direct ? "Offer" : "Bid"}
                 </button>

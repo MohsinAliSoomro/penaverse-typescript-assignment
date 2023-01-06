@@ -10,7 +10,7 @@ body{
 }
 @layer components {
     .connectWalletBtn{
-        @apply bg-gradient-to-r from-blue-400 to-blue-700 text-white px-4 py-2 rounded shadow
+        @apply bg-gradient-to-r from-[#F7CE68] to-[#FBAB7E] text-white px-4 py-2 rounded shadow-lg
     }
     .link {
         @apply text-blue-500 

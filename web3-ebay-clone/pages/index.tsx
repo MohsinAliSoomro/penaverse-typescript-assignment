@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ListingType } from "@thirdweb-dev/sdk";
 import { BanknotesIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-
+import Footer from '../components/Footer'
 const Home: NextPage = () => {
   const { contract } = useContract(
     process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT,
@@ -18,14 +18,14 @@ const Home: NextPage = () => {
       <Header />
       <main className="max-w-6xl mx-auto mt-2">
         {isLoading ? (
-          <div className="animate-bounce text-blue-500 text-center">
+          <div className="animate-bounce text-orange-800 text-center">
             Loading...!
           </div>
         ) : (
           <div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto p-2 md:p-0">
             {data?.map((item) => (
               <Link href={`/nft/${item.id}`} key={item.id}>
-                <div className="border p-2 shadow rounded-2xl w-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white hover:scale-105 transition-all duration-150 ease-out">
+                <div className="shadow-orange-400/50 p-2 shadow-lg rounded-2xl w-full bg-gradient-to-r from-[#F7CE68] to-[#FBAB7E] text-white hover:scale-105 transition-all duration-150 ease-out">
                   {item.asset.image && (
                     <Image
                       className="w-full h-48 object-cover rounded-2xl"
@@ -61,6 +61,7 @@ const Home: NextPage = () => {
           </div>
         )}
       </main>
+      <Footer />
     </div>
   );
 };

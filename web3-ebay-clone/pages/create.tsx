@@ -58,8 +58,6 @@ export default function Create() {
     };
     const { listing, price } = target.elements;
 
-    console.log({ listing: listing.value, price: price.value, selectNft });
-
     if (listing.value === "directListing") {
       if (process.env.NEXT_PUBLIC_NFT_COLLECTIONS) {
         createDirectListing(
