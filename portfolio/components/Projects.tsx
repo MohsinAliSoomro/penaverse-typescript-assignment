@@ -11,13 +11,15 @@ export default function Work() {
         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
           <div
             key={item}
-            className="bg-gradient-to-t from-secondary3 to-secondary2 p-5 rounded-xl shadow-2xl space-y-3 hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-t relative from-secondary3 to-secondary2 p-5 rounded-xl shadow-2xl space-y-3 hover:scale-105 transition-all duration-300"
           >
             <img
               src="https://images.unsplash.com/photo-1670349148055-e11a0b3be242?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
               alt="Project 1"
               className="rounded-xl"
             />
+
+            {/* <div className="absolute top-0 left-0 bg-gradient-to-t opacity-30 h-full from-secondary3 to-secondary2 z-50 w-full rounded-xl "></div> */}
             <p className="text-secondary1 font-changa">Project Name</p>
             <p className="text-secondary1 font-changa">
               Project Description in 2 lines

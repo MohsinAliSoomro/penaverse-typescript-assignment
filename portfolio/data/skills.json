@@ -1,0 +1,22 @@
+[
+  {
+    "name": "AWS",
+    "image": "/aws.png"
+  },
+  {
+    "name": "Reactjs",
+    "image": "/react.png"
+  },
+  {
+    "name": "Nextjs",
+    "image": "/next.png"
+  },
+  {
+    "name": "Tailwindcss",
+    "image": "/tailwindcss.png"
+  },
+  {
+    "name": "WEB3",
+    "image": "web3.webp"
+  }
+]
