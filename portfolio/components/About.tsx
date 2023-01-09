@@ -1,6 +1,7 @@
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
-export default function About() {
+export default function About({ data }: any) {
+  console.log({ data });
   return (
     <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 gap-6 my-8">
       <div className="flex justify-center items-center">
@@ -10,19 +11,16 @@ export default function About() {
       </div>
       <div className="space-y-5 p-4">
         <h1 className="font-changa text-6xl font-bold text-secondary1">
-          About Us
+          {data?.fields?.about?.title}
         </h1>
         <p className="text-4xl font-changa text-secondary1">
-          Software{" "}
-          <span className="text-4xl font-changa text-secondary3">Engineer</span>
+          {data?.fields?.about?.professional?.split(" ")[0]}{" "}
+          <span className="text-4xl font-changa text-secondary3">
+            {data?.fields?.about?.professional?.split(" ")[1]}
+          </span>
         </p>
         <p className="leading-8 text-secondary2 font-changa text-lg">
-          I am an innovative, creative thinker who is adept at coming up with
-          real solutions that work for clients. With experience in a wide
-          variety of software, system architectures and programming languages, I
-          am always current with the latest developments in the software
-          development world. I pride myself on optimizing function and providing
-          solutions that are intuitive user-friendly, adaptable and effective.
+          {data?.fields?.about?.description}
         </p>
       </div>
     </div>
