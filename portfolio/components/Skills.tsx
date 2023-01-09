@@ -21,6 +21,7 @@ export default function Skills({ data }: any) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: (0.2 * index) % 2 }}
+                  key={index}
                   className="w-full h-64 flex justify-center items-center"
                 >
                   <div>

@@ -30,19 +30,8 @@ export default function Hero({ data }: { data: any }) {
     <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 p-8 place-content-center gap-4 relative">
       <div className="flex justify-center items-center">
         <div>
-          {/* <motion.p
-            initial={{ x: -500 }}
-            animate={{ x: 0 }}
-            transition={{
-              duration: 0.5,
-              type: "tween",
-            }}
-            className="text-secondary1 font-bold text-6xl font-changa"
-          >
-            {data?.fields?.metadata?.name[0]}
-          </motion.p> */}
-          {data?.fields?.metadata?.name?.map((item: any) => (
-            <p className="text-secondary1 font-bold text-6xl font-changa">
+          {data?.fields?.metadata?.name?.map((item: any,idx:number) => (
+            <p key={idx} className="text-secondary1 font-bold text-6xl font-changa">
               {item?.split("")?.map((i: any, index: number) => (
                 <motion.span
                   initial={{ opacity: 0, scale: 0 }}
@@ -59,22 +48,7 @@ export default function Hero({ data }: { data: any }) {
               ))}
             </p>
           ))}
-          {/* <p className="text-secondary1 font-bold text-6xl font-changa">
-            {description.map((item, index: number) => (
-              <motion.span
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 2,
-                  delay: (0.2 * index) % 2,
-                  type: "tween",
-                }}
-                key={item}
-              >
-                {item}
-              </motion.span>
-            ))}
-          </p> */}
+ 
         </div>
       </div>
       <div>
