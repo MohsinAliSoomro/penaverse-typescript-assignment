@@ -154,6 +154,7 @@ export default function Home() {
                   bg={item.isCompleted ? "green.500" : "red.500"}
                   borderRadius="lg"
                   boxShadow="lg"
+                  key={item.id}
                   color="white"
                   bgGradient={`${
                     item.isCompleted
