@@ -1,6 +1,5 @@
 import {
   Button,
-  useDisclosure,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -20,12 +19,12 @@ import { trpc } from "utils/trpc";
 
 function AddTodo({
   isOpen,
-  onOpen,
   onClose,
+  refetch,
 }: {
   isOpen: boolean;
-  onOpen: () => void;
   onClose: () => void;
+  refetch: () => void;
 }) {
   const toast = useToast();
   const [title, setTitle] = useState("");
@@ -51,6 +50,10 @@ function AddTodo({
             isClosable: true,
           });
           onClose();
+          refetch();
+          setTitle("");
+          setContet("");
+          setIsCompleted(false);
         },
         onError() {
           toast({
@@ -66,11 +69,6 @@ function AddTodo({
   };
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-      <Button ml={4} ref={finalRef}>
-        I'll receive focus on close
-      </Button>
-
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
@@ -78,15 +76,16 @@ function AddTodo({
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
-          <ModalCloseButton />
+        <ModalContent bgGradient="linear-gradient(to right top, #b3bac4, #90a2bc, #6d8ab4, #4873ab, #0c5ca2)">
+          <ModalHeader color="white">Create Todo</ModalHeader>
+          <ModalCloseButton color="white" />
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel>Title</FormLabel>
+              <FormLabel color="white">Title</FormLabel>
               <Input
                 ref={initialRef}
                 value={title}
+                color="white"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setTitle(e.target.value)
                 }
@@ -95,19 +94,22 @@ function AddTodo({
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Description</FormLabel>
+              <FormLabel color="white">Description</FormLabel>
               <Input
                 placeholder="Description"
                 value={content}
+                color="white"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setContet(e.target.value)
                 }
               />
             </FormControl>
             <FormControl mt={4}>
-              <FormLabel>Complete</FormLabel>
+              <FormLabel color="white">Complete</FormLabel>
               <Checkbox
                 colorScheme="green"
+                borderColor="white"
+                color="white"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setIsCompleted(e.target.checked);
                 }}

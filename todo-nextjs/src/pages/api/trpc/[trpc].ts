@@ -6,33 +6,11 @@ import * as trpcNext from "@trpc/server/adapters/next";
 import prisma from "lib/prisma";
 import { z } from "zod";
 import { publicProcedure, router } from "../../../server/trpc";
-interface ITodos {
-  title: string;
-  content: string;
-  isCompleted: string;
-  createdAt: string;
-  updatedAt: string;
-  id: string;
-}
+
 const appRouter = router({
-  greeting: publicProcedure
-    // This is the input schema of your procedure
-    // 💡 Tip: Try changing this and see type errors on the client straight away
-    .input(
-      z.object({
-        name: z.string().nullish(),
-      })
-    )
-    .query(({ input }) => {
-      // This is what you're returning to your client
-      return {
-        text: `hello ${input?.name ?? "world"}`,
-        // 💡 Tip: Try adding a new property here and see it propagate to the client straight-away
-      };
-    }),
   getTodos: publicProcedure.query(async () => {
-    const response = await prisma.todo.findMany()
-    
+    const response = await prisma.todo.findMany();
+
     return {
       data: response,
     };
@@ -53,10 +31,60 @@ const appRouter = router({
         data: response,
       };
     }),
-  // 💡 Tip: Try adding a new procedure here and see if you can use it in the client!
-  // getUser: publicProcedure.query(() => {
-  //   return { id: '1', name: 'bob' };
-  // }),
+  deleteTodo: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async (data) => {
+      const response = await prisma.todo.delete({
+        where: {
+          id: data.input.id,
+        },
+      });
+      return {
+        data: response,
+      };
+    }),
+  markAsComplete: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const response = await prisma.todo.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          isCompleted: true,
+        },
+      });
+      return {
+        data: response,
+      };
+    }),
+  markAsInComplete: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const response = await prisma.todo.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          isCompleted: false,
+        },
+      });
+      return {
+        data: response,
+      };
+    }),
 });
 
 // export only the type definition of the API
