@@ -1,7 +1,28 @@
 import Head from "next/head";
-import Image from "next/image";
+import { trpc } from "utils/trpc";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Text,
+  Grid,
+  GridItem,
+  Heading,
+  Button,
+  Flex,
+  Spacer,
+  Skeleton,
+  useDisclosure
+  //@ts-ignore
+} from "@chakra-ui/react";
+import AddTodo from "@/components/addTodo";
 
 export default function Home() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { data: todos, isLoading, isError, error } = trpc.getTodos.useQuery();
+
+  const { mutate } = trpc.addTodo.useMutation();
   return (
     <div>
       <Head>
@@ -10,7 +31,83 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>Next App</main>
+      <main>
+        <Flex px="6">
+          <Heading>Todo App</Heading>
+          <Spacer />
+          <Button colorScheme="teal" onClick={onOpen}>Add Todo</Button>
+        </Flex>
+
+        <Grid templateColumns="repeat(5, 1fr)" gap={6} p="6">
+          {isLoading
+            ? [0, 1, 2, 3, 4].map((item) => (
+                <GridItem key={item}>
+                  <Skeleton
+                    height="250px"
+                    bg="green.500"
+                    color="white"
+                    fadeDuration={1}
+                  ></Skeleton>
+                </GridItem>
+              ))
+            : todos?.data.map((item) => (
+                <GridItem
+                  w="100%"
+                  bg="blue.500"
+                  borderRadius="lg"
+                  color="white"
+                >
+                  <Card>
+                    <CardHeader>
+                      <Heading as="h3" size="xl">
+                        {item.title}
+                      </Heading>
+                    </CardHeader>
+                    <CardBody>
+                      <Text>{item.content}</Text>
+                      <Text>Complete {item.isCompleted ? "Done" : "Todo"}</Text>
+                    </CardBody>
+                    <CardFooter>
+                      <Flex>
+                        <Button colorScheme="teal" variant="solid">
+                          Complete
+                        </Button>
+                        <Spacer />
+                        <Button colorScheme="red">Delete</Button>
+                      </Flex>
+                    </CardFooter>
+                  </Card>
+                </GridItem>
+              ))}
+        </Grid>
+
+        {/* {isLoading ? (
+          <div>Loading</div>
+        ) : (
+          todos?.data.map((item) => {
+            return (
+              <div>
+                <p>{item.title}</p>
+                <p>{item.content}</p>
+                <p>{item.isCompleted ? "DONE" : "Todo"}</p>
+                <p>{item.createdAt}</p>
+                <p>{item.createdAt}</p>
+              </div>
+            );
+          })
+        )}
+        <button
+          onClick={() => {
+            mutate({
+              content: "Content 1",
+              title: "Todo 1",
+            });
+          }}
+        >
+          Add Todo
+        </button> */}
+      </main>
+      <AddTodo isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
     </div>
   );
 }
