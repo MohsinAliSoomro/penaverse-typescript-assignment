@@ -175,7 +175,7 @@ export default function Home() {
                         {item.isCompleted ? (
                           <CheckIcon mx="2" color="green.600" />
                         ) : (
-                          <CloseIcon mx="2"  color="red.600" />
+                          <CloseIcon mx="2" color="red.600" />
                         )}
                       </Text>
                     </CardBody>
